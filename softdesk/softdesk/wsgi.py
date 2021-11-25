@@ -1,5 +1,5 @@
 """
-WSGI config for softdesk project.
+WSGI config for softdesk projects.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

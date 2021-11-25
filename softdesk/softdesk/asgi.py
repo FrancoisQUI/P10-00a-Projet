@@ -1,5 +1,5 @@
 """
-ASGI config for softdesk project.
+ASGI config for softdesk projects.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
