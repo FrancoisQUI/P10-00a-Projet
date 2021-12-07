@@ -35,6 +35,7 @@ class Contributor(models.Model):
                                    related_name='contributor_project',
                                    on_delete=models.CASCADE)
     role = models.CharField(max_length=100, blank=False)
-    permission = models.CharField(choices=CONTRIBUTOR_PERMISSION_CHOICES, max_length=6, blank=False, default='Read')
+    permission = models.CharField(choices=CONTRIBUTOR_PERMISSION_CHOICES, max_length=6,
+                                  blank=False, default='Read')
 
 
