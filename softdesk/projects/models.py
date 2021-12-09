@@ -21,7 +21,7 @@ class Project(models.Model):
     author_user_id = models.ForeignKey(to=User,
                                        related_name='project_author',
                                        on_delete=models.CASCADE)
-    contributors = models.ManyToManyField(User, through="Contributor")
+    contributors = models.ManyToManyField(User, through="Contributor", null=True)
 
     def __str__(self):
         return self.title
