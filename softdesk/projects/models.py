@@ -17,11 +17,13 @@ CONTRIBUTOR_PERMISSION_CHOICES = (('Create', 'Create'),
 class Project(models.Model):
     title = models.CharField(max_length=100, blank=False)
     description = models.CharField(max_length=2000, blank=False)
-    type = models.CharField(choices=PROJECT_TYPE_CHOICES, max_length=100, blank=False)
+    type = models.CharField(choices=PROJECT_TYPE_CHOICES,
+                            max_length=100, blank=False)
     author_user_id = models.ForeignKey(to=User,
-                                       related_name='project_author',
+                                       related_name='projects',
                                        on_delete=models.CASCADE)
-    contributors = models.ManyToManyField(User, through="Contributor", null=True)
+    contributors = models.ManyToManyField(User,
+                                          through="Contributor")
 
     def __str__(self):
         return self.title
@@ -35,7 +37,10 @@ class Contributor(models.Model):
                                    related_name='contributor_project',
                                    on_delete=models.CASCADE)
     role = models.CharField(max_length=100, blank=False)
-    permission = models.CharField(choices=CONTRIBUTOR_PERMISSION_CHOICES, max_length=6,
+    permission = models.CharField(choices=CONTRIBUTOR_PERMISSION_CHOICES,
+                                  max_length=6,
                                   blank=False, default='Read')
 
+    class Meta:
+        unique_together = ('project_id', 'user_id')
 

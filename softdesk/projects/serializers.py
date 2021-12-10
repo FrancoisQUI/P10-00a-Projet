@@ -27,8 +27,8 @@ class ContributorSerializer(ModelSerializer):
 
 
 class ProjectSerializer(ModelSerializer):
-    contributors = ContributorSerializer(many=True)
-    author_user_id = UserSerializer()
+    # contributors = ContributorSerializer(many=True)
+    # author_user_id = UserSerializer()
 
     class Meta:
         model = Project
