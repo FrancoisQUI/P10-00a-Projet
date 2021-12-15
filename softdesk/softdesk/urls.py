@@ -7,7 +7,7 @@ from projects.views import ProjectViewSet
 from comments.views import CommentViewSet
 
 
-router = routers.DefaultRouter()
+router = routers.SimpleRouter()
 router.register(r'projects', ProjectViewSet, basename='projects')
 router.register(r'comments', CommentViewSet)
 

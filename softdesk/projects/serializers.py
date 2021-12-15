@@ -27,12 +27,13 @@ class ContributorSerializer(ModelSerializer):
 
 
 class ProjectSerializer(ModelSerializer):
-    # contributors = ContributorSerializer(many=True)
-    # author_user_id = UserSerializer()
+    contributors = ContributorSerializer(many=True, read_only=True)
+    author_user_id = UserSerializer(read_only=True)
 
     class Meta:
         model = Project
         fields = ["title",
+                  "id",
                   "description",
                   "type",
                   "author_user_id",

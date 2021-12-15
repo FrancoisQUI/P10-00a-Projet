@@ -11,6 +11,7 @@ class ProjectViewSet(ModelViewSet):
     """
     API Endpoint that allows Projects to be viewed and edited
     """
+    queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
 
@@ -25,6 +26,7 @@ class ProjectViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
+        """ create a Project with Authenticated author as New Project author"""
         project = Project(author_user_id=self.request.user)
         serializer = ProjectSerializer(project, data=request.data)
         if serializer.is_valid():
@@ -32,3 +34,17 @@ class ProjectViewSet(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        queryset = Project.objects.get(pk=kwargs["pk"])
+        serializer = ProjectSerializer(queryset, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        project = self.get_object()
+        self.perform_destroy(project)
+        return Response(data={"detail": "Project successfully destroyed"}, status=status.HTTP_204_NO_CONTENT)
