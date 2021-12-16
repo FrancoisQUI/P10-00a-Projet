@@ -1,10 +1,13 @@
+from pprint import pprint
+
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, UserSerializer
 
 
 class ProjectViewSet(ModelViewSet):
@@ -48,3 +51,18 @@ class ProjectViewSet(ModelViewSet):
         project = self.get_object()
         self.perform_destroy(project)
         return Response(data={"detail": "Project successfully destroyed"}, status=status.HTTP_204_NO_CONTENT)
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        pprint(self.__dict__)
+        queryset = User.objects.filter(pk=kwargs["projects_pk"])
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        pass
