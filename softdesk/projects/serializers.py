@@ -1,10 +1,9 @@
-from pprint import pprint
-
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import UniqueValidator
 
 from django.contrib.auth.models import User
-from rest_framework.validators import UniqueValidator
+from django.contrib.auth.password_validation import validate_password
 
 from .models import Project, Contributor
 
@@ -19,6 +18,7 @@ class ContributorSerializer(ModelSerializer):
     class Meta:
         model = Contributor
         fields = [
+            "pk",
             "user_id",
             "project_id",
             "role",
@@ -51,7 +51,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        fields = ('id', 'username', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}

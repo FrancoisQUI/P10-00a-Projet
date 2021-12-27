@@ -8,10 +8,8 @@ PROJECT_TYPE_CHOICES = (('Backend', 'Backend'),
                         ('iOS', 'iOS'),
                         ('Android', 'Android'))
 
-CONTRIBUTOR_PERMISSION_CHOICES = (('Create', 'Create'),
-                                  ('Read', 'Read'),
-                                  ('Update', 'Update'),
-                                  ('Delete', 'Delete'))
+CONTRIBUTOR_PERMISSION_CHOICES = (('Read', 'Read'),
+                                  ('Write', 'Write'))
 
 
 class Project(models.Model):
