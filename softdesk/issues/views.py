@@ -1,6 +1,5 @@
-from pprint import pprint
-
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
@@ -38,9 +37,12 @@ class IssueViewSet(ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
-        issue = self.get_object()
-        pprint(issue.__dict__)
-        self.perform_destroy(issue)
+        queryset = get_object_or_404(
+            Issue,
+            pk=kwargs['pk']
+        )
+        self.perform_destroy(queryset)
+
         return Response(data={"detail": "Issue successfully destroyed"},
                         status=status.HTTP_204_NO_CONTENT)
 

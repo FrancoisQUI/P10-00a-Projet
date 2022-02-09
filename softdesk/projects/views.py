@@ -2,6 +2,7 @@ from pprint import pprint
 
 from django.contrib.auth.models import User
 from rest_framework import status, generics
+from rest_framework.generics import get_object_or_404
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -73,8 +74,8 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
-        print("Je détruit un Utilisateur! Hahahaha!")
-        queryset = Contributor.objects.get(
+        queryset = get_object_or_404(
+            Contributor,
             user_id_id=kwargs['pk'],
             project_id_id=kwargs['projects_pk'])
         self.perform_destroy(queryset)
