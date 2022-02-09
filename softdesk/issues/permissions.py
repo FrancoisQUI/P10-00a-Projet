@@ -15,7 +15,7 @@ class IsProjectAuthorOrContributor(permissions.BasePermission):
         if request.user.id == project.author_user_id_id:
             return True
 
-        if request.user in project.contributors.all():
+        if request.user.id in project.contributors.all():
             return True
 
         return False

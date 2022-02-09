@@ -28,7 +28,7 @@ class IsProjectAuthorOrContributorAndIssueAuthor(permissions.BasePermission):
         if request.user.is_superuser:
             return True
 
-        if request.user.id == obj.commend_user_id_id:
+        if request.user.id == obj.author_user_id_id:
             return True
 
         if request.method == "GET":

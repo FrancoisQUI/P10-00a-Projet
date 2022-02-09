@@ -33,9 +33,15 @@ class IssueViewSet(ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-            # TODO: Save Author as Contributor
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        issue = self.get_object()
+        pprint(issue.__dict__)
+        self.perform_destroy(issue)
+        return Response(data={"detail": "Issue successfully destroyed"},
+                        status=status.HTTP_204_NO_CONTENT)
 
 

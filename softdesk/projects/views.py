@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsOwnerOrContributor
+from .permissions import IsOwnerOrContributor, IsOwner
 
 from .models import Project, Contributor
 from .serializers import ProjectSerializer, \
@@ -64,7 +64,7 @@ class ProjectViewSet(ModelViewSet):
 class UserViewSet(ModelViewSet):
     queryset = Contributor.objects.all()
     serializer_class = ContributorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
     throttle_classes = [UserRateThrottle]
 
     def list(self, request, *args, **kwargs):
@@ -73,6 +73,7 @@ class UserViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        print("Je détruit un Utilisateur! Hahahaha!")
         queryset = Contributor.objects.get(
             user_id_id=kwargs['pk'],
             project_id_id=kwargs['projects_pk'])
